@@ -1,3 +1,5 @@
+
+
 CREATE TABLE boards (
     id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
     name VARCHAR(256) NOT NULL
@@ -14,4 +16,23 @@ CREATE TABLE board_users (
     isAdmin BOOLEAN DEFAULT false,
     boardId UUID REFERENCES boards(id) ON DELETE CASCADE ON UPDATE CASCADE,
     userId UUID REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
-)
+);
+
+CREATE TABLE lista(
+    id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+    name VARCHAR(256) NOT NULL,
+    board_id UUID REFERENCES boards(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+CREATE TABLE tarjeta(
+    id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+     name VARCHAR(256) NOT NULL,
+     id_lista UUID REFERENCES lista(id)ON DELETE CASCADE ON UPDATE CASCADE,
+     description VARCHAR (256) NOT NULL,
+     fecha_tope DATE
+); 
+CREATE TABLE user_tarjeta(
+    id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+    isOwner BOOLEAN DEFAULT false, 
+    tarjetaId UUID REFERENCES tarjeta(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    userId UUID REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+);

@@ -6,7 +6,6 @@ export class Board {
   @Length(5, 30)
   name: string;
 
-  @IsDefined()
   @IsUUID()
   adminUserId: string;
 }
